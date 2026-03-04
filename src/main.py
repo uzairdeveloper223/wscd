@@ -1,5 +1,6 @@
 import sys
 import ids
+import chat
 debug = False
 
 try:
@@ -27,6 +28,9 @@ if __name__ == "__main__":
         print("ERROR! RoomID not valid")
         exit(1)
     tunnel = ids.roomID_tunnel(room_dict)
-    print(tunnel["link"])
+    if debug == True:
+        print(tunnel["link"])
+    chat.chat(tunnel)
+    
 
     

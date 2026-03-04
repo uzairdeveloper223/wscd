@@ -3,8 +3,7 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 LINK_DATABASE = {
-    "2026-AE-1234": "https://example.com/reports/ae-2026-v1",
-    "2025-US-5678": "https://example.com/archive/us-5678"
+
 }
 
 @app.route('/get-link', methods=['POST'])
@@ -21,13 +20,33 @@ def get_link_by_id():
     except KeyError as e:
         return jsonify({"error": f"Missing key in ID dict: {str(e)}"}), 400
 
-    # 4. Find the link
     link = LINK_DATABASE.get(formatted_id)
 
     if link:
         return jsonify({"status": "success", "link": link}), 200
     else:
         return jsonify({"error": "ID not found"}), 404
+
+@app.route("/add-server", methods=['POST'])
+def add_server_id():
+    data = request.get_json()
+    idadd = data.get("id")
+
+    if not idadd:
+        return jsonify({"error": "No ID passed"}), 400
+
+    tunnel = data.get("tunnel")
+
+    if not tunnel:
+        return jsonify({"error": "No tunnel passed"}), 400
+
+    formatted_id = f"{idadd["year"]}-{idadd["region"]}-{idadd["number"]}"
+    LINK_DATABASE[formatted_id] == tunnel
+    return jsonify({"status": "success", "link": link}), 200
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

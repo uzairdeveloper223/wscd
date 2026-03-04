@@ -1,0 +1,30 @@
+import asyncio
+import websockets
+
+async def chat():
+    url = input("Enter the server URL (wss://...): ")
+    name = input("Enter your nickname: ")
+
+    async with websockets.connect(url) as ws:
+        print(f"Connected to {url}!")
+
+        # Task to receive messages
+        async def receive():
+            async for message in ws:
+                print(f"\n{message}")
+
+        # Task to send messages
+        async def send():
+            while True:
+                # Use run_in_executor so input() doesn't freeze the program
+                msg = await asyncio.get_event_loop().run_in_executor(None, input, f"{name} > ")
+                await ws.send(f"{name}: {msg}")
+
+        # Run both tasks at the same time
+        await asyncio.gather(receive(), send())
+
+if __name__ == "__main__":
+    try:
+        asyncio.run(chat())
+    except KeyboardInterrupt:
+        print("Exiting...")
