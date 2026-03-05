@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
-
+global LINK_DATABASE
 LINK_DATABASE = {
 
 }
@@ -41,8 +41,8 @@ def add_server_id():
         return jsonify({"error": "No tunnel passed"}), 400
 
     formatted_id = f"{idadd["year"]}-{idadd["region"]}-{idadd["number"]}"
-    LINK_DATABASE[formatted_id] == tunnel
-    return jsonify({"status": "success", "link": link}), 200
+    LINK_DATABASE[formatted_id] = tunnel
+    return jsonify({"status": "success"}), 200
 
 
 

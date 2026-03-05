@@ -1,6 +1,7 @@
 import sys
 import ids
 import chat
+import asyncio
 debug = False
 
 try:
@@ -30,7 +31,7 @@ if __name__ == "__main__":
     tunnel = ids.roomID_tunnel(room_dict)
     if debug == True:
         print(tunnel["link"])
-    chat.chat(tunnel)
+    asyncio.run(chat.chat(tunnel))
     
 
     

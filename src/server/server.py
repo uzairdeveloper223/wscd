@@ -33,9 +33,9 @@ async def main():
         print(f"----------------------\n")
         number = random.randint(1000, 9999)
         region = input("enter ISO region code (2 letters (e.g US, AE, SA)): ")
-        response = requests.post(url=GLOBSERVER + "/add-server", data={"id": {"year": date.today().year, "region": region, "numbers": number}, "tunnel": str(tunnel_url).replace("https", "wss")})
+        response = requests.post(url=GLOBSERVER + "/add-server", json={"id": {"year": date.today().year, "region": region, "number": number}, "tunnel": str(tunnel_url).replace("https", "wss")})
         print(f"code: {date.today().year}-{region}-{number}")
-        if response != 200:
+        if response.status_code != 200:
             print("couldnt register server")
             exit(1)
 
