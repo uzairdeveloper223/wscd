@@ -120,4 +120,4 @@ async def chat(tunnel_dict):
             else:
                 print(f"\n--- Failed to reconnect after {MAX_RETRIES} attempts. ---")
 
-    print("--- Session Ended, use Ctrl Z to exit ---")
+    print("--- Session Ended ---")
